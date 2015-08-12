@@ -31,8 +31,14 @@
 	<description>
 		Allows the copying of files from a remote location to a path relative to the project in which the plugin is configured.
 	</description>
-
+	<url>http://keub.github.io/remote-resources-maven-plugin</url>
 	<inceptionYear>2015</inceptionYear>
+	<organization>
+		<name>Dandelion Project</name>
+		<url>http://keub.github.io/remote-resources-maven-plugin</url>
+	</organization>
+
+	
 
 	<prerequisites>
 		<maven>${mavenVersion}</maven>
@@ -172,6 +178,39 @@
 		</plugins>
 
 	</build>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/keub/remote-resources-maven-plugin/issues</url>
+	</issueManagement>
+	<scm>
+		<connection>scm:git:git://github.com/keub/remote-resources-maven-plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:keub/remote-resources-maven-plugin.git</developerConnection>
+		<url>http://github.com/keub/remote-resources-maven-plugin</url>
+	</scm>
+	
+	<developers>
+		<developer>
+			<id>twrzos</id>
+			<name>Tony Wrzos</name>
+			<email>tony.wrzos@gmail.com</email>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Lead developer</role>
+			</roles>
+		</developer>
+		
+		<developer>
+			<id>tduchateau</id>
+			<name>Thibault Duchateau</name>
+			<email>thibault.duchateau@gmail.com</email>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
 
 
 </project>
