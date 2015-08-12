@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20150812" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>remote-resources-maven-plugin - About</title>
+    <title>remote-resources-maven-plugin - 
+    remote-resources:help</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.1.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -69,7 +70,8 @@
         remote-resources-maven-plugin</a>
                     <span class="divider">/</span>
       </li>
-        <li class="active ">About</li>
+        <li class="active ">
+    remote-resources:help</li>
         
                 
                     
@@ -104,111 +106,13 @@
         Usage</a>
             </li>
                               <li class="nav-header">Project Documentation</li>
-                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                          
       <li>
   
                           <a href="project-info.html" title="Project Information">
-          <i class="icon-chevron-down"></i>
+          <i class="icon-chevron-right"></i>
         Project Information</a>
-                    <ul class="nav nav-list">
-                    
-      <li class="active">
-  
-            <a href="#"><i class="none"></i>About</a>
-          </li>
-                    
-      <li>
-  
-                          <a href="project-summary.html" title="Project Summary">
-          <i class="none"></i>
-        Project Summary</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependency-info.html" title="Dependency Information">
-          <i class="none"></i>
-        Dependency Information</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="license.html" title="Project License">
-          <i class="none"></i>
-        Project License</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="team-list.html" title="Project Team">
-          <i class="none"></i>
-        Project Team</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="source-repository.html" title="Source Repository">
-          <i class="none"></i>
-        Source Repository</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="issue-tracking.html" title="Issue Tracking">
-          <i class="none"></i>
-        Issue Tracking</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="mail-lists.html" title="Mailing Lists">
-          <i class="none"></i>
-        Mailing Lists</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependency-management.html" title="Dependency Management">
-          <i class="none"></i>
-        Dependency Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependencies.html" title="Dependencies">
-          <i class="none"></i>
-        Dependencies</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="integration.html" title="Continuous Integration">
-          <i class="none"></i>
-        Continuous Integration</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="plugin-management.html" title="Plugin Management">
-          <i class="none"></i>
-        Plugin Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="plugins.html" title="Project Plugins">
-          <i class="none"></i>
-        Project Plugins</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="distribution-management.html" title="Distribution Management">
-          <i class="none"></i>
-        Distribution Management</a>
-            </li>
-              </ul>
-        </li>
+                  </li>
                                                                   
       <li>
   
@@ -365,9 +269,155 @@
                 
         <div id="bodyColumn"  class="span9" >
                                   
-            <div class="section">
-<h2>About Remote Resources Maven Plugin<a name="About_Remote_Resources_Maven_Plugin"></a></h2><a name="About_Remote_Resources_Maven_Plugin"></a>
-<p>Allows the copying of files from a remote location to a path relative to the project in which the plugin is configured.</p></div>
+            
+  
+    <div class="section">
+<h2>remote-resources:help<a name="remote-resources:help"></a></h2>
+      
+<p><b>Full name</b>:</p>
+      
+<p>com.github.keub:remote-resources-maven-plugin:1.0:help</p>
+      
+<p><b>Description</b>:</p>
+      
+<div>Display help information on remote-resources-maven-plugin.<br />
+Call <tt>mvn remote-resources:help -Ddetail=true
+-Dgoal=&lt;goal-name&gt;</tt> to display parameter details.</div>
+      
+<p><b>Attributes</b>:</p>
+      
+<ul>
+        
+<li>The goal is thread-safe and supports parallel builds.</li>
+      </ul>
+      
+<div class="section">
+<h3>Optional Parameters<a name="Optional_Parameters"></a></h3>
+        
+<table class="table table-striped" border="0">
+          
+<tr class="a">
+            
+<th>Name</th>
+            
+<th>Type</th>
+            
+<th>Since</th>
+            
+<th>Description</th>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#detail">detail</a></b></td>
+            
+<td><tt>boolean</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>If <tt>true</tt>, display all settable properties for each
+goal.<br /><b>Default value is</b>: <tt>false</tt>.<br /><b>User property is</b>: <tt>detail</tt>.</td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#goal">goal</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>The name of the goal for which to show help. If unspecified, all
+goals will be displayed.<br /><b>User property is</b>: <tt>goal</tt>.</td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#indentSize">indentSize</a></b></td>
+            
+<td><tt>int</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>The number of spaces per indentation level, should be positive.<br /><b>Default value is</b>: <tt>2</tt>.<br /><b>User property is</b>: <tt>indentSize</tt>.</td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#lineLength">lineLength</a></b></td>
+            
+<td><tt>int</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>The maximum length of a display line, should be positive.<br /><b>Default value is</b>: <tt>80</tt>.<br /><b>User property is</b>: <tt>lineLength</tt>.</td>
+          </tr>
+        </table>
+      </div>
+      
+<div class="section">
+<h3>Parameter Details<a name="Parameter_Details"></a></h3>
+        
+<p><b><a name="detail">detail</a>:</b></p>
+        
+<div>If <tt>true</tt>, display all settable properties for each
+goal.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>boolean</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>detail</tt></li>
+          
+<li><b>Default</b>: <tt>false</tt></li>
+        </ul><hr />
+<p><b><a name="goal">goal</a>:</b></p>
+        
+<div>The name of the goal for which to show help. If unspecified, all
+goals will be displayed.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>goal</tt></li>
+        </ul><hr />
+<p><b><a name="indentSize">indentSize</a>:</b></p>
+        
+<div>The number of spaces per indentation level, should be positive.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>int</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>indentSize</tt></li>
+          
+<li><b>Default</b>: <tt>2</tt></li>
+        </ul><hr />
+<p><b><a name="lineLength">lineLength</a>:</b></p>
+        
+<div>The maximum length of a display line, should be positive.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>int</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>lineLength</tt></li>
+          
+<li><b>Default</b>: <tt>80</tt></li>
+        </ul>
+      </div>
+    </div>
+  
+
                   </div>
             </div>
           </div>
