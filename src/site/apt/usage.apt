@@ -1,0 +1,108 @@
+Usage
+
+ The following examples describe the basic usage of the Plugin.
+
+* Copy resources from GIT project 
+  
+  If you want to copy resources that are in a project git accessible from where your project is built , specify the configuration as follows :  
+
++---------------------
+<configuration>   
+  <resources>
+      <resource>
+      <uri>git://github.com/user/repo.git</uri>
+      </resource>              
+    </resources>
+  <outputDirectory>src/main/filters</outputDirectory>
+</configuration>
++---------------------
+
+	You can specify the branch or tag
+	
++---------------------
+<configuration>   
+  <resources>
+  <resource>
+    ...
+    <branchTagName>origin/example_branch</branchTagName>
+    ...
+    </resource>              
+  </resources>    
+</configuration>
++---------------------
+
+  The branchTagName tag is optional, if it is not specified, the default is the master branch to be operated .
+
+* Include and exclude resources 
+
+  You can include only resource using inclusions tags. The syntax used is Apache Ant.
+
++---------------------
+<configuration>   
+  <resources>
+      ...
+    <includes>
+      <include>**/foo.txt</include>
+    </includes>              
+    </resources>    
+</configuration>
++---------------------
+  The result is a set of files where only the files that are called ' foo.txt ' in any directories are present in the output directory.
+  
+    You can exclude certain resource using exclusions tags. The syntax used is Apache Ant.
+
++---------------------
+<configuration>   
+  <resources>
+      ...
+    <excludes>
+      <exclude>**/foo.txt</exclude>
+    </excludes>              
+    </resources>    
+</configuration>
++---------------------
+  The result is a file where all the files that are called ' foo.txt ' in any directories are missing from the output directory.
+  
+* Execution-level configuration
+
+  If you want to use the plugin in different executions configuration should look like this :
+
++---------------------
+<plugin>
+  <groupId>com.github.keub</groupId>
+    <artifactId>remote-resources-maven-plugin</artifactId>
+    <version>1.0</version>
+    <executions>
+      <execution>
+        <id>execution1</id>
+        <phase>generate-resources</phase>
+        <goals>
+          <goal>copy</goal>
+        </goals>
+        <configuration>   
+          <resources>
+            <resource>
+              <uri>git://github.com/user/repo.git</uri>              
+            </resource>              
+          </resources>
+          <outputDirectory>src/main/filters</outputDirectory>
+        </configuration>
+      </execution>
+      <execution>
+        <id>execution2</id>
+        <phase>generate-resources</phase>
+        <goals>
+          <goal>copy</goal>
+        </goals>
+        <configuration>   
+          <resources>
+            <resource>
+              <uri>git://github.com/user/repo2.git</uri>              
+            </resource>              
+          </resources>
+          <outputDirectory>src/main/filters2</outputDirectory>
+        </configuration>
+      </execution>
+  </executions>  
+</plugin>
++---------------------
