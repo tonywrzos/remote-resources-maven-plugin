@@ -34,7 +34,7 @@
 	<url>http://keub.github.io/remote-resources-maven-plugin</url>
 	<inceptionYear>2015</inceptionYear>
 	<organization>
-		<name>Dandelion Project</name>
+		<name>remote-resources-maven-plugin</name>
 		<url>http://keub.github.io/remote-resources-maven-plugin</url>
 	</organization>
 
@@ -53,6 +53,12 @@
 	<contributors>
 		<contributor>
 			<name>WRZOS Tony</name>
+		</contributor>
+		<contributor>
+			<name>SEILLIER Philippe</name>
+		</contributor>
+		<contributor>
+			<name>DUCHATEAU Thibault</name>
 		</contributor>
 	</contributors>
 
@@ -145,7 +151,7 @@
 
 
 	</dependencies>
-
+ 
 
 	<build>
 		<pluginManagement>
