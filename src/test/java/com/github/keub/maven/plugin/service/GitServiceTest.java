@@ -20,14 +20,15 @@ import org.junit.Test;
 import com.github.keub.maven.plugin.exception.InvalidSourceException;
 import com.github.keub.maven.plugin.model.Resource;
 import com.github.keub.maven.plugin.resources.CopyResourcesMojo;
-import com.github.keub.maven.plugin.service.FileService;
-import com.github.keub.maven.plugin.service.IncludeService;
 
 public class GitServiceTest {
 
-	private static final File gitSandboxDirectory = new File("src/test/resources/git_sandbox");
-	private static final File pjtSandboxDirectory = new File("src/test/resources/pjt_sandbox");
-	private static final File sandboxDirectory = new File("src/test/resources/sandbox");
+	private static final File gitSandboxDirectory = new File(
+			"src/test/resources/git_sandbox");
+	private static final File pjtSandboxDirectory = new File(
+			"src/test/resources/pjt_sandbox");
+	private static final File sandboxDirectory = new File(
+			"src/test/resources/sandbox");
 	private static final String subOutputDirectory = "/src/main/filters";
 	private static Git git;
 
@@ -39,25 +40,33 @@ public class GitServiceTest {
 
 	@BeforeClass
 	public static void init_test() throws GitAPIException, IOException {
+		// clean local git repo
+		FileUtils.cleanDirectory(gitSandboxDirectory);
 		// init git repo
 		git = Git.init().setDirectory(gitSandboxDirectory).call();
-
+		// populate local git repo
 		FileUtils.copyDirectory(sandboxDirectory, gitSandboxDirectory);
+		// check if subdirectory exist
+		File outputDirectory = new File(pjtSandboxDirectory.getAbsolutePath()
+				.concat(subOutputDirectory));
+		outputDirectory.mkdirs();
 	}
 
 	@Test
-	public void test_copy_local_git_files_into_sandbox() throws InvalidSourceException, IOException {
+	public void test_copy_local_git_files_into_sandbox()
+			throws InvalidSourceException, IOException {
 		CopyResourcesMojo copyResourcesMojo = new CopyResourcesMojo();
 
 		copyResourcesMojo.setProject(project);
 		copyResourcesMojo.setSession(session);
 
-		File outputDirectory = new File(pjtSandboxDirectory.getAbsolutePath().concat(subOutputDirectory));
+		File outputDirectory = new File(pjtSandboxDirectory.getAbsolutePath()
+				.concat(subOutputDirectory));
 		// raz outputDirectory
 		FileUtils.cleanDirectory(outputDirectory);
 
-		FileService.copyFilesIntoOutputDirectory(copyResourcesMojo, gitSandboxDirectory, outputDirectory,
-				new Resource());
+		FileService.copyFilesIntoOutputDirectory(copyResourcesMojo,
+				gitSandboxDirectory, outputDirectory, new Resource());
 
 		Set<String> sourceFiles = FileService.findFiles(gitSandboxDirectory);
 		Set<String> destinationFiles = FileService.findFiles(outputDirectory);
@@ -67,13 +76,15 @@ public class GitServiceTest {
 	}
 
 	@Test
-	public void test_copy_local_git_only_includes_files_into_sandbox() throws InvalidSourceException, IOException {
+	public void test_copy_local_git_only_includes_files_into_sandbox()
+			throws InvalidSourceException, IOException {
 		CopyResourcesMojo copyResourcesMojo = new CopyResourcesMojo();
 
 		copyResourcesMojo.setProject(project);
 		copyResourcesMojo.setSession(session);
 
-		File outputDirectory = new File(pjtSandboxDirectory.getAbsolutePath().concat(subOutputDirectory));
+		File outputDirectory = new File(pjtSandboxDirectory.getAbsolutePath()
+				.concat(subOutputDirectory));
 		// raz outputDirectory
 		FileUtils.cleanDirectory(outputDirectory);
 
@@ -82,7 +93,8 @@ public class GitServiceTest {
 		includes.add("**/foo.txt");
 		resource.setIncludes(includes);
 
-		FileService.copyFilesIntoOutputDirectory(copyResourcesMojo, gitSandboxDirectory, outputDirectory, resource);
+		FileService.copyFilesIntoOutputDirectory(copyResourcesMojo,
+				gitSandboxDirectory, outputDirectory, resource);
 
 		Set<String> sourceFiles = FileService.findFiles(gitSandboxDirectory);
 		sourceFiles = IncludeService.process(includes, sourceFiles);
@@ -93,7 +105,8 @@ public class GitServiceTest {
 	}
 
 	@AfterClass
-	public static void clean_test() throws IOException, NoWorkTreeException, GitAPIException {
+	public static void clean_test() throws IOException, NoWorkTreeException,
+			GitAPIException {
 		// clean local git repo
 		FileUtils.cleanDirectory(gitSandboxDirectory);
 		Assert.assertNull(git.getRepository().getRef("HEAD"));

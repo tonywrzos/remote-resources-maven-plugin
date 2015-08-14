@@ -22,22 +22,29 @@ public class GitService {
 	 * </p>
 	 * 
 	 * @param resource
+	 *            a resource
 	 * @param copyResourcesMojo
+	 *            mojo attach to goal copy
 	 * @param workspacePlugin
-	 * @return
+	 *            file as workspace where plugin clone git repository
+	 * @return source folder
 	 * @throws ResourceExecutionException
+	 * 
 	 */
-	public static String getSourceFolder(Resource resource, CopyResourcesMojo copyResourcesMojo, File workspacePlugin)
+	public static String getSourceFolder(Resource resource,
+			CopyResourcesMojo copyResourcesMojo, File workspacePlugin)
 			throws ResourceExecutionException {
 		// Build a git project
 		Project project = ProjectService.getProject(resource);
 		// Clone git project
 		try {
-			GitService.cloneProjectIntoWorkspace(project, workspacePlugin.getAbsolutePath());
-			return PathUtils.getAbsoluteProjectPath(project, workspacePlugin.getAbsolutePath());
-		}
-		catch (GitException e) {
-			throw new ResourceExecutionException("Error when clone Project : " + project, e);
+			GitService.cloneProjectIntoWorkspace(project,
+					workspacePlugin.getAbsolutePath());
+			return PathUtils.getAbsoluteProjectPath(project,
+					workspacePlugin.getAbsolutePath());
+		} catch (GitException e) {
+			throw new ResourceExecutionException("Error when clone Project : "
+					+ project, e);
 		}
 	}
 
@@ -47,7 +54,8 @@ public class GitService {
 	 * @param targetFolder
 	 * @throws GitException
 	 */
-	public static void cloneProjectIntoWorkspace(Project project, String targetFolder) throws GitException {
+	public static void cloneProjectIntoWorkspace(Project project,
+			String targetFolder) throws GitException {
 
 		String url = String.valueOf(project.getUri());
 		String gitCommiterName = project.getUsername();
@@ -56,21 +64,25 @@ public class GitService {
 		if (url == null || url.isEmpty() || url.indexOf("/") == -1) {
 			return;
 		}
-		String absolutePath = PathUtils.getAbsoluteProjectPath(project, targetFolder);
+		String absolutePath = PathUtils.getAbsoluteProjectPath(project,
+				targetFolder);
 		File absoluteFolder = new File(absolutePath);
 		// test de presence du clone
 		if (absoluteFolder.exists()) {
 			// le depot a deja ete clone - on update
-			String branchTagName = project.getBranchTagName() == null ? Constants.MASTER_NAME : project
-					.getBranchTagName();
-			gitRepository.url(url).localPath(Paths.get(absolutePath)).credentials(gitCommiterName, gitCommiterPassword)
-					.disableCertificateValidation().selectBranch(branchTagName).fetch().hardReset(branchTagName);
+			String branchTagName = project.getBranchTagName() == null ? Constants.MASTER_NAME
+					: project.getBranchTagName();
+			gitRepository.url(url).localPath(Paths.get(absolutePath))
+					.credentials(gitCommiterName, gitCommiterPassword)
+					.disableCertificateValidation().selectBranch(branchTagName)
+					.fetch().hardReset(branchTagName);
 
-		}
-		else {
+		} else {
 			// premier clone
-			gitRepository.url(url).localPath(Paths.get(targetFolder)).credentials(gitCommiterName, gitCommiterPassword)
-					.disableCertificateValidation().disableHostnameVerification().cloneRepository()
+			gitRepository.url(url).localPath(Paths.get(targetFolder))
+					.credentials(gitCommiterName, gitCommiterPassword)
+					.disableCertificateValidation()
+					.disableHostnameVerification().cloneRepository()
 					.localPath(Paths.get(absolutePath));
 
 		}

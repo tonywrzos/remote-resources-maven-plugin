@@ -28,7 +28,7 @@
 
 	<name>Remote Resources Maven Plugin</name>
 	<description>
-		Allows the copying of files from a remote location to a path relative to the project in which the plugin is configured.
+		Copy files from a remote location to a path relative to the project in which the plugin is configured.
 	</description>
 	<url>http://keub.github.io/remote-resources-maven-plugin</url>
 	<inceptionYear>2015</inceptionYear>
@@ -190,6 +190,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+			      <additionalparam>-Xdoclint:none</additionalparam>
+			    </configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>

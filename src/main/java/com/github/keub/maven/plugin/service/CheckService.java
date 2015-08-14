@@ -12,18 +12,25 @@ public class CheckService {
 	 * </p>
 	 * 
 	 * @param outputDirectory
-	 * @param log
+	 *            the file represents output folder
+	 * @throws InvalidOutputDirectoryException
+	 *             exeception throw if folder {@code ouutputdirectory} is not
+	 *             valid
 	 */
-	public static void isValidOutputDirectory(File outputDirectory) throws InvalidOutputDirectoryException {
+	public static void isValidOutputDirectory(File outputDirectory)
+			throws InvalidOutputDirectoryException {
 
 		if (!outputDirectory.exists()) {
-			throw new InvalidOutputDirectoryException("'" + outputDirectory + "' doesn't exist.");
+			throw new InvalidOutputDirectoryException("'" + outputDirectory
+					+ "' doesn't exist.");
 		}
 		if (!outputDirectory.isDirectory()) {
-			throw new InvalidOutputDirectoryException("'" + outputDirectory + "' is not a directory.");
+			throw new InvalidOutputDirectoryException("'" + outputDirectory
+					+ "' is not a directory.");
 		}
 		if (!outputDirectory.canWrite()) {
-			throw new InvalidOutputDirectoryException("Unable to wrote into '" + outputDirectory + "'.");
+			throw new InvalidOutputDirectoryException("Unable to wrote into '"
+					+ outputDirectory + "'.");
 		}
 	}
 }

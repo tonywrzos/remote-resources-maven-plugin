@@ -13,7 +13,11 @@ public class ExcludeService {
 	 * </p>
 	 * 
 	 * @param excludes
+	 *            ant patterns collection
 	 * @param files
+	 *            files set to process
+	 * @return files set
+	 * 
 	 */
 	public static Set<String> process(Set<String> excludes, Set<String> files) {
 		if (excludes == null || files == null) {
@@ -23,7 +27,8 @@ public class ExcludeService {
 		AntPathMatcher antPathMatcher = new AntPathMatcher();
 		for (String pattern : excludes) {
 			for (String path : files) {
-				boolean match = antPathMatcher.match(pattern, FileService.normalizePath(path));
+				boolean match = antPathMatcher.match(pattern,
+						FileService.normalizePath(path));
 				if (!match) {
 					retval.add(path);
 				}

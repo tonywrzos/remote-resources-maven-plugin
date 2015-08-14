@@ -24,14 +24,22 @@ public class FileService {
 	 * </p>
 	 * 
 	 * @param copyResourcesMojo
+	 *            Implementation of mojo with goal 'copy'
 	 * @param sourceFolder
+	 *            The source folder
 	 * @param destinationFolder
+	 *            The destination folder
 	 * @param resource
+	 *            Resource to process
 	 * @throws InvalidSourceException
+	 *             Exception throw if source is not valid
 	 * @throws IOException
+	 *             Exception throw if invalid manipulation files
 	 */
-	static void copyFilesIntoOutputDirectory(CopyResourcesMojo copyResourcesMojo, File sourceFolder,
-			File destinationFolder, Resource resource) throws InvalidSourceException, IOException {
+	static void copyFilesIntoOutputDirectory(
+			CopyResourcesMojo copyResourcesMojo, File sourceFolder,
+			File destinationFolder, Resource resource)
+			throws InvalidSourceException, IOException {
 		// check
 		if (sourceFolder.isFile()) {
 			throw new InvalidSourceException("Expected folder as source");
@@ -39,7 +47,8 @@ public class FileService {
 		if (destinationFolder.isFile()) {
 			throw new InvalidSourceException("Expected destination as source");
 		}
-		copyResourcesMojo.getLog().debug("Find file into '" + sourceFolder + "'");
+		copyResourcesMojo.getLog().debug(
+				"Find file into '" + sourceFolder + "'");
 		// find files into source folder
 		Set<String> files = findFiles(sourceFolder);
 		copyResourcesMojo.getLog().debug("files before processing :" + files);
@@ -49,10 +58,11 @@ public class FileService {
 		if (files != null) {
 			for (String file : files) {
 				// source
-				BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
+				BufferedInputStream reader = new BufferedInputStream(
+						new FileInputStream(file));
 				// destination
-				StringBuilder finalFile = buildAbsoluteFinalFile(file, sourceFolder.getAbsolutePath(),
-						destinationFolder);
+				StringBuilder finalFile = buildAbsoluteFinalFile(file,
+						sourceFolder.getAbsolutePath(), destinationFolder);
 
 				// prepare writer
 				FileUtils.createIntermediateFolders(String.valueOf(finalFile));
@@ -63,17 +73,16 @@ public class FileService {
 				// copy
 				try {
 					FileUtils.writeFile(reader, writer);
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					throw e;
-				}
-				finally {
+				} finally {
 					// close all
 					writer.close();
 					reader.close();
 				}
 			}
-			copyResourcesMojo.getLog().info(files.size() + " files in outputDirectory.");
+			copyResourcesMojo.getLog().info(
+					files.size() + " files in outputDirectory.");
 		}
 	}
 
@@ -84,19 +93,25 @@ public class FileService {
 	 * </p>
 	 * 
 	 * @param copyResourcesMojo
+	 *            Implementation of mojo with goal 'copy'
 	 * @param resource
+	 *            Resource to process
 	 * @param files
-	 * @return
+	 *            All files to proccess with include and exclude
+	 * @return Files set
 	 */
-	private static Set<String> processIncludeExclude(CopyResourcesMojo copyResourcesMojo, Resource resource,
+	private static Set<String> processIncludeExclude(
+			CopyResourcesMojo copyResourcesMojo, Resource resource,
 			Set<String> files) {
 		Set<String> retval = new HashSet<String>(files);
 		// process with include parameters
 		retval = IncludeService.process(resource.getIncludes(), files);
-		copyResourcesMojo.getLog().debug("files after include processing :" + files);
+		copyResourcesMojo.getLog().debug(
+				"files after include processing :" + files);
 		// process with exclude parameters
 		retval = ExcludeService.process(resource.getExcludes(), retval);
-		copyResourcesMojo.getLog().debug("files after exclude processing :" + files);
+		copyResourcesMojo.getLog().debug(
+				"files after exclude processing :" + files);
 		return retval;
 	}
 
@@ -107,12 +122,17 @@ public class FileService {
 	 * </p>
 	 * 
 	 * @param file
+	 *            Relative file from remote resource
 	 * @param basePath
+	 *            Absolute path to outputdirectory
 	 * @param destinationFolder
-	 * @return
+	 *            Relative sub path from output directory
+	 * @return absolute path file in output directory
 	 */
-	private static StringBuilder buildAbsoluteFinalFile(String file, String basePath, File destinationFolder) {
-		StringBuilder retval = new StringBuilder(destinationFolder.getAbsolutePath());
+	private static StringBuilder buildAbsoluteFinalFile(String file,
+			String basePath, File destinationFolder) {
+		StringBuilder retval = new StringBuilder(
+				destinationFolder.getAbsolutePath());
 		PathUtils.addEndingSlashIfNeeded(retval);
 		String relativePath = file.replace(basePath, "");
 		retval.append(relativePath);
@@ -125,7 +145,9 @@ public class FileService {
 	 * </p>
 	 * 
 	 * @param sourceFolder
-	 * @return
+	 *            the source folder to search content
+	 * @return file set
+	 * 
 	 */
 	public static Set<String> findFiles(File sourceFolder) {
 		return findFiles(sourceFolder, sourceFolder);
@@ -138,20 +160,22 @@ public class FileService {
 	 * </p>
 	 * 
 	 * @param sourceFolder
+	 *            the source folder to search content
 	 * @param baseFile
-	 * @return
+	 *            sub directory from source folder
+	 * @return file set
 	 */
 	private static Set<String> findFiles(File sourceFolder, File baseFile) {
 		Set<String> retval = new HashSet<String>();
-		if (!sourceFolder.exists() || sourceFolder.isHidden() || !sourceFolder.isDirectory() || !sourceFolder.canRead()
+		if (!sourceFolder.exists() || sourceFolder.isHidden()
+				|| !sourceFolder.isDirectory() || !sourceFolder.canRead()
 				|| isGitMetaDataFolder(sourceFolder)) {
 			return retval;
 		}
 		for (File file : sourceFolder.listFiles()) {
 			if (file.isDirectory()) {
 				retval.addAll(findFiles(file, sourceFolder));
-			}
-			else {
+			} else {
 				retval.add(file.getAbsolutePath());
 			}
 		}
@@ -164,11 +188,12 @@ public class FileService {
 	 * separator
 	 * </p>
 	 * 
-	 * @param absolutePath
-	 * @return
+	 * @param path
+	 *            the path to normalize
+	 * @return normalized string
 	 */
-	static String normalizePath(String absolutePath) {
-		String retval = absolutePath;
+	static String normalizePath(String path) {
+		String retval = path;
 		retval = retval.replace(PathUtils.MULTIPLE_SLASH, PathUtils.SLASH);
 		retval = retval.replace(PathUtils.BACKSLASH, PathUtils.SLASH);
 		return retval;
@@ -180,7 +205,9 @@ public class FileService {
 	 * </p>
 	 * 
 	 * @param file
-	 * @return
+	 *            file to test
+	 * @return if git is a meta data folder
+	 * 
 	 */
 	private static boolean isGitMetaDataFolder(File file) {
 		return Constants.EXTENSION_GIT.equals(file.getName());
