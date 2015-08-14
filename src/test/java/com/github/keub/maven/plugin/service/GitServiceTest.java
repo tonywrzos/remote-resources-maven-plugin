@@ -42,6 +42,7 @@ public class GitServiceTest {
 	public static void init_test() throws GitAPIException, IOException {
 		// clean local git repo
 		FileUtils.cleanDirectory(gitSandboxDirectory);
+		gitSandboxDirectory.mkdirs();
 		// init git repo
 		git = Git.init().setDirectory(gitSandboxDirectory).call();
 		// populate local git repo
