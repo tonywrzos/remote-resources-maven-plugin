@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.keub.maven.plugin.utils.AntPathMatcher;
+import com.github.keub.maven.plugin.utils.FileUtils;
 
 public class IncludeService {
 
@@ -21,7 +22,8 @@ public class IncludeService {
 		AntPathMatcher antPathMatcher = new AntPathMatcher();
 		for (String pattern : includes) {
 			for (String path : files) {
-				boolean match = antPathMatcher.match(pattern, FileService.normalizePath(path));
+				boolean match = antPathMatcher.match(pattern,
+						FileUtils.normalizePath(path));
 				if (match) {
 					retval.add(path);
 				}

@@ -2,6 +2,7 @@ package com.github.keub.maven.plugin.service;
 
 import com.github.keub.maven.plugin.exception.ProtocolException;
 import com.github.keub.maven.plugin.model.Resource;
+import com.github.keub.maven.plugin.strategy.FtpStrategy;
 import com.github.keub.maven.plugin.strategy.GitStrategy;
 import com.github.keub.maven.plugin.strategy.ProtocolStrategy;
 import com.github.keub.maven.plugin.utils.Constants;
@@ -25,16 +26,19 @@ public class ProtocolService {
 	 * @return
 	 * @throws ProtocolException
 	 */
-	public static ProtocolStrategy getStrategy(Resource resource) throws ProtocolException {
+	public static ProtocolStrategy getStrategy(Resource resource)
+			throws ProtocolException {
 		if (resource == null) {
-			throw new ProtocolException("Unable to find implementation with resource : " + resource);
+			throw new ProtocolException(
+					"Unable to find implementation with resource : " + resource);
 		}
 		// search by url
 		ProtocolStrategy retval = findStrategyByUrl(resource);
 		if (retval != null) {
 			return retval;
 		}
-		throw new ProtocolException("This protocol has not yet been implemented : " + resource);
+		throw new ProtocolException(
+				"This protocol has not yet been implemented : " + resource);
 	}
 
 	private static ProtocolStrategy findStrategyByUrl(Resource resource) {
@@ -49,9 +53,19 @@ public class ProtocolService {
 		 */
 		String protocol = resource.getUri().getScheme();
 		if (protocol.equalsIgnoreCase(GIT_PROTOCOL)
-				|| (protocol.equalsIgnoreCase(HTTP_PROTOCOL) || protocol.equalsIgnoreCase(HTTPS_PROTOCOL)
-						&& resource.getUri().toString().endsWith(Constants.EXTENSION_GIT))) {
+				|| (protocol.equalsIgnoreCase(HTTP_PROTOCOL) || protocol
+						.equalsIgnoreCase(HTTPS_PROTOCOL)
+						&& resource.getUri().toString()
+								.endsWith(Constants.EXTENSION_GIT))) {
 			return new GitStrategy();
+		}
+		/**
+		 * FTP
+		 * 
+		 * tests whether the resource is configured with a ftp remote
+		 */
+		if (protocol.equalsIgnoreCase(FTP_PROTOCOL)) {
+			return new FtpStrategy();
 		}
 		return null;
 	}

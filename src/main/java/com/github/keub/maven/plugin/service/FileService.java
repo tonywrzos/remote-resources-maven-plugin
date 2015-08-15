@@ -42,7 +42,9 @@ public class FileService {
 			throws InvalidSourceException, IOException {
 		// check
 		if (sourceFolder.isFile()) {
-			throw new InvalidSourceException("Expected folder as source");
+			throw new InvalidSourceException(
+					"Expected folder as source, not a file : '" + sourceFolder
+							+ "'");
 		}
 		if (destinationFolder.isFile()) {
 			throw new InvalidSourceException("Expected destination as source");
@@ -179,23 +181,6 @@ public class FileService {
 				retval.add(file.getAbsolutePath());
 			}
 		}
-		return retval;
-	}
-
-	/**
-	 * <p>
-	 * standardization of a path by replacing the slash and backslash by a file
-	 * separator
-	 * </p>
-	 * 
-	 * @param path
-	 *            the path to normalize
-	 * @return normalized string
-	 */
-	static String normalizePath(String path) {
-		String retval = path;
-		retval = retval.replace(PathUtils.MULTIPLE_SLASH, PathUtils.SLASH);
-		retval = retval.replace(PathUtils.BACKSLASH, PathUtils.SLASH);
 		return retval;
 	}
 

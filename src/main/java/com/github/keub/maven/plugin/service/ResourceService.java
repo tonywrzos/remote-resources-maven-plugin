@@ -22,7 +22,8 @@ public class ResourceService {
 	 * @param outputDirectory
 	 * @throws ResourceExecutionException
 	 */
-	public static void execute(CopyResourcesMojo copyResourcesMojo, Resource resource, File outputDirectory)
+	public static void execute(CopyResourcesMojo copyResourcesMojo,
+			Resource resource, File outputDirectory)
 			throws ResourceExecutionException {
 
 		copyResourcesMojo.getLog().debug("Execute resource : " + resource);
@@ -31,35 +32,37 @@ public class ResourceService {
 		// security
 		if (workspacePlugin.exists()) {
 			copyResourcesMojo.getLog().debug(
-					"delete workspacePlugin resource because already exist : '" + workspacePlugin.getAbsolutePath()
-							+ "'");
+					"delete workspacePlugin resource because already exist : '"
+							+ workspacePlugin.getAbsolutePath() + "'");
 			if (workspacePlugin.delete()) {
-				throw new ResourceExecutionException("Unable to delete workspace plugin directory '" + workspacePlugin
-						+ "'");
+				copyResourcesMojo.getLog().debug(
+						"Unable to delete workspace plugin directory '"
+								+ workspacePlugin + "'");
 			}
 		}
 		// find correct strategy
 		ProtocolStrategy strategy;
 		try {
 			strategy = ProtocolService.getStrategy(resource);
-		}
-		catch (ProtocolException e) {
-			throw new ResourceExecutionException("Protocol implementation not found", e);
+			copyResourcesMojo.getLog().debug(
+					"current strategy is "
+							+ strategy.getClass().getSimpleName());
+		} catch (ProtocolException e) {
+			throw new ResourceExecutionException(
+					"Protocol implementation not found", e);
 		}
 		// strategy return a source folder
-		String sourceFolder = strategy.getSourceFolder(resource, copyResourcesMojo, workspacePlugin);
+		String sourceFolder = strategy.getSourceFolder(resource,
+				copyResourcesMojo, workspacePlugin);
 		// source folder is copied into destination
 		try {
-			FileService.copyFilesIntoOutputDirectory(copyResourcesMojo, new File(sourceFolder), outputDirectory,
-					resource);
-		}
-		catch (FileNotFoundException e) {
+			FileService.copyFilesIntoOutputDirectory(copyResourcesMojo,
+					new File(sourceFolder), outputDirectory, resource);
+		} catch (FileNotFoundException e) {
 			throw new ResourceExecutionException(e);
-		}
-		catch (InvalidSourceException e) {
+		} catch (InvalidSourceException e) {
 			throw new ResourceExecutionException(e);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new ResourceExecutionException(e);
 		}
 	}
