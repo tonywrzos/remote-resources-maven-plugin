@@ -2,6 +2,24 @@ Usage
 
  The following examples describe the basic usage of the Plugin.
 
+* Declare plugin
+
+  Declare remote-resources-maven-plugin in build section :
++---------------------
+<build>
+  <plugins>
+    <plugin>
+      <groupId>com.github.keub</groupId>
+      <artifactId>remote-resources-maven-plugin</artifactId>
+      <version>1.1</version>
+      ...
+    </plugin>
+  </plugins>
+</build>
++---------------------
+
+  and add some configurations ( git, ftp .. ) 
+
 * Copy resources from GIT project 
   
   If you want to copy resources that are in a project git accessible from where your project is built , specify the configuration as follows :  
@@ -71,7 +89,7 @@ Usage
 <plugin>
   <groupId>com.github.keub</groupId>
     <artifactId>remote-resources-maven-plugin</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <executions>
       <execution>
         <id>execution1</id>
