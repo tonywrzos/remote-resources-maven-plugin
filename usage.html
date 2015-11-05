@@ -100,7 +100,19 @@
 <p>The following examples describe the basic usage of the Plugin.</p>
 <div class="section">
 <h3>Declare plugin<a name="Declare_plugin"></a></h3>
-<p>Declare remote-resources-maven-plugin in build section : +--------------------- <i>build</i> <i>plugins</i> <i>plugin</i> <i>groupId</i>com.github.keub<i>/groupId</i> <i>artifactId</i>remote-resources-maven-plugin<i>/artifactId</i> <i>version</i>1.1<i>/version</i> ... <i>/plugin</i> <i>/plugins</i> <i>/build</i> +---------------------</p>
+<p>Declare remote-resources-maven-plugin in build section :</p>
+<div class="source">
+<pre>&lt;build&gt;
+  &lt;plugins&gt;
+    &lt;plugin&gt;
+      &lt;groupId&gt;com.github.keub&lt;/groupId&gt;
+      &lt;artifactId&gt;remote-resources-maven-plugin&lt;/artifactId&gt;
+      &lt;version&gt;1.1&lt;/version&gt;
+      ...
+    &lt;/plugin&gt;
+  &lt;/plugins&gt;
+&lt;/build&gt;
+</pre></div>
 <p>and add some configurations ( git, ftp .. ) </p></div>
 <div class="section">
 <h3>Copy resources from GIT project <a name="Copy_resources_from_GIT_project"></a></h3>
