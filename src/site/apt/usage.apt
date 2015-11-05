@@ -58,11 +58,11 @@ Usage
 +---------------------
 <configuration>   
   <resources>
-      ...
+      ...            
+    </resources>
     <includes>
       <include>**/foo.txt</include>
-    </includes>              
-    </resources>    
+    </includes>      
 </configuration>
 +---------------------
   The result is a set of files where only the files that are called ' foo.txt ' in any directories are present in the output directory.
@@ -72,11 +72,11 @@ Usage
 +---------------------
 <configuration>   
   <resources>
-      ...
+      ...             
+    </resources>
     <excludes>
       <exclude>**/foo.txt</exclude>
-    </excludes>              
-    </resources>    
+    </excludes>     
 </configuration>
 +---------------------
   The result is a file where all the files that are called ' foo.txt ' in any directories are missing from the output directory.
