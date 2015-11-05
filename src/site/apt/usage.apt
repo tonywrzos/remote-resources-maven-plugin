@@ -5,6 +5,7 @@ Usage
 * Declare plugin
 
   Declare remote-resources-maven-plugin in build section :
+  
 +---------------------
 <build>
   <plugins>
