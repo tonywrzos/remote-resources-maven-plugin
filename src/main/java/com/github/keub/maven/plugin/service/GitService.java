@@ -67,11 +67,13 @@ public class GitService {
 		String absolutePath = PathUtils.getAbsoluteProjectPath(project,
 				targetFolder);
 		File absoluteFolder = new File(absolutePath);
+		// recuperation d'une branche potentiellement renseignee
+		String branchTagName = project.getBranchTagName() == null ? Constants.MASTER_NAME
+				: project.getBranchTagName();
+
 		// test de presence du clone
 		if (absoluteFolder.exists()) {
 			// le depot a deja ete clone - on update
-			String branchTagName = project.getBranchTagName() == null ? Constants.MASTER_NAME
-					: project.getBranchTagName();
 			gitRepository.url(url).localPath(Paths.get(absolutePath))
 					.credentials(gitCommiterName, gitCommiterPassword)
 					.disableCertificateValidation().selectBranch(branchTagName)
@@ -83,7 +85,9 @@ public class GitService {
 					.credentials(gitCommiterName, gitCommiterPassword)
 					.disableCertificateValidation()
 					.disableHostnameVerification().cloneRepository()
-					.localPath(Paths.get(absolutePath));
+					.localPath(Paths.get(absolutePath))
+					.selectBranch(branchTagName).fetch()
+					.hardReset(branchTagName);
 
 		}
 	}
