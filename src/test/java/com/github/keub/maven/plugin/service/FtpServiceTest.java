@@ -42,13 +42,16 @@ public class FtpServiceTest {
 		Assert.assertNotNull(sandboxFile.list());
 		Assert.assertEquals(1, sandboxFile.list().length);
 		Assert.assertEquals(FTP_PUBLIC_LOCAL_FILE_NAME, sandboxFile.list()[0]);
+		new File(FTP_PUBLIC_LOCAL_FILE_NAME).delete();
 
 	}
 
 	@BeforeClass
 	public static void after() throws IOException {
 		File sandboxFile = new File(FTP_SANDBOX);
-		org.apache.commons.io.FileUtils.cleanDirectory(sandboxFile);
+		if (sandboxFile.exists()) {
+			org.apache.commons.io.FileUtils.cleanDirectory(sandboxFile);
+		}
 	}
 
 }
