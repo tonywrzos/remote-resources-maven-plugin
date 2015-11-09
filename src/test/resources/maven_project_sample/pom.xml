@@ -10,7 +10,7 @@
       <plugin>
         <groupId>com.github.keub</groupId>
         <artifactId>remote-resources-maven-plugin</artifactId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
         <executions>
           <execution>
             <id>execution1</id>

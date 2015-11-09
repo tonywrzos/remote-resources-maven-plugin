@@ -19,7 +19,9 @@ public class CheckService {
 	 */
 	public static void isValidOutputDirectory(File outputDirectory)
 			throws InvalidOutputDirectoryException {
-
+		if (!outputDirectory.exists()) {
+			outputDirectory.mkdirs();
+		}
 		if (!outputDirectory.exists()) {
 			throw new InvalidOutputDirectoryException("'" + outputDirectory
 					+ "' doesn't exist.");
