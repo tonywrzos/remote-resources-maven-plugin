@@ -20,6 +20,7 @@ public class ResourceService {
 	 * @param copyResourcesMojo
 	 * @param resource
 	 * @param outputDirectory
+	 * @param flatten
 	 * @throws ResourceExecutionException
 	 */
 	public static void execute(CopyResourcesMojo copyResourcesMojo,
@@ -56,8 +57,10 @@ public class ResourceService {
 				copyResourcesMojo, workspacePlugin);
 		// source folder is copied into destination
 		try {
+			boolean flatten = resource.getFlatten() == null ? false : resource
+					.getFlatten();
 			FileService.copyFilesIntoOutputDirectory(copyResourcesMojo,
-					new File(sourceFolder), outputDirectory, resource);
+					new File(sourceFolder), outputDirectory, resource, flatten);
 		} catch (FileNotFoundException e) {
 			throw new ResourceExecutionException(e);
 		} catch (InvalidSourceException e) {

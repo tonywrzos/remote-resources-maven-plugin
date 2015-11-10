@@ -10,7 +10,7 @@
       <plugin>
         <groupId>com.github.keub</groupId>
         <artifactId>remote-resources-maven-plugin</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
         <executions>
           <execution>
             <id>execution1</id>
@@ -24,8 +24,9 @@
                   <uri>https://github.com/keub/filters.git</uri>
                   <branchTagName>origin/${env}</branchTagName>
                   <includes>
-                    <include>**/filter-${env}.properties</include>
+                    <include>**/subdirectory/filter2-${env}.properties</include>
                   </includes>
+                  <flatten>true</flatten>
                 </resource>
               </resources>
               <outputDirectory>src/main/filters</outputDirectory>

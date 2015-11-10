@@ -31,6 +31,7 @@ public class FileService {
 	 *            The destination folder
 	 * @param resource
 	 *            Resource to process
+	 * @param isFlatten
 	 * @throws InvalidSourceException
 	 *             Exception throw if source is not valid
 	 * @throws IOException
@@ -38,7 +39,7 @@ public class FileService {
 	 */
 	static void copyFilesIntoOutputDirectory(
 			CopyResourcesMojo copyResourcesMojo, File sourceFolder,
-			File destinationFolder, Resource resource)
+			File destinationFolder, Resource resource, boolean isFlatten)
 			throws InvalidSourceException, IOException {
 		// check
 		if (sourceFolder.isFile()) {
@@ -64,7 +65,8 @@ public class FileService {
 						new FileInputStream(file));
 				// destination
 				StringBuilder finalFile = buildAbsoluteFinalFile(file,
-						sourceFolder.getAbsolutePath(), destinationFolder);
+						sourceFolder.getAbsolutePath(), destinationFolder,
+						isFlatten);
 
 				// prepare writer
 				FileUtils.createIntermediateFolders(String.valueOf(finalFile));
@@ -129,15 +131,23 @@ public class FileService {
 	 *            Absolute path to outputdirectory
 	 * @param destinationFolder
 	 *            Relative sub path from output directory
+	 * @param isFlatten
 	 * @return absolute path file in output directory
 	 */
 	private static StringBuilder buildAbsoluteFinalFile(String file,
-			String basePath, File destinationFolder) {
+			String basePath, File destinationFolder, boolean isFlatten) {
 		StringBuilder retval = new StringBuilder(
 				destinationFolder.getAbsolutePath());
 		PathUtils.addEndingSlashIfNeeded(retval);
-		String relativePath = file.replace(basePath, "");
-		retval.append(relativePath);
+		if (!isFlatten) {
+			// delete output directory from basePath
+			String relativePath = file.replace(basePath, "");
+			retval.append(relativePath);
+		} else {
+			// skip location file
+			String relativePath = new File(file).getName();
+			retval.append(relativePath);
+		}
 		return retval;
 	}
 

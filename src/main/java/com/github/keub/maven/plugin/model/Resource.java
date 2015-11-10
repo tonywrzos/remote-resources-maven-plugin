@@ -12,7 +12,7 @@ import org.apache.maven.plugins.annotations.Parameter;
  * This object represents a resource as it is described in the pom.xml resources
  * in tags
  * </p>
- *
+ * 
  */
 public class Resource {
 
@@ -34,6 +34,9 @@ public class Resource {
 	@Parameter(required = false)
 	private Set<String> excludes;
 
+	@Parameter(required = false)
+	private Boolean flatten;
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -44,14 +47,18 @@ public class Resource {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
 		Resource other = (Resource) obj;
 		if (uri == null) {
-			if (other.uri != null) return false;
-		}
-		else if (!uri.equals(other.uri)) return false;
+			if (other.uri != null)
+				return false;
+		} else if (!uri.equals(other.uri))
+			return false;
 		return true;
 	}
 
@@ -132,8 +139,10 @@ public class Resource {
 		StringBuilder builder = new StringBuilder();
 		builder.append("[");
 		int i = 0;
-		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
-			if (i > 0) builder.append(", ");
+		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext()
+				&& i < maxLen; i++) {
+			if (i > 0)
+				builder.append(", ");
 			builder.append(iterator.next());
 		}
 		builder.append("]");
@@ -146,5 +155,13 @@ public class Resource {
 
 	public void setUri(URI uri) {
 		this.uri = uri;
+	}
+
+	public Boolean getFlatten() {
+		return flatten;
+	}
+
+	public void setFlatten(Boolean flatten) {
+		this.flatten = flatten;
 	}
 }

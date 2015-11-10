@@ -69,7 +69,7 @@ public class GitServiceTest {
 		FileUtils.cleanDirectory(outputDirectory);
 
 		FileService.copyFilesIntoOutputDirectory(copyResourcesMojo,
-				gitSandboxDirectory, outputDirectory, new Resource());
+				gitSandboxDirectory, outputDirectory, new Resource(), false);
 
 		Set<String> sourceFiles = FileService.findFiles(gitSandboxDirectory);
 		Set<String> destinationFiles = FileService.findFiles(outputDirectory);
@@ -97,7 +97,7 @@ public class GitServiceTest {
 		resource.setIncludes(includes);
 
 		FileService.copyFilesIntoOutputDirectory(copyResourcesMojo,
-				gitSandboxDirectory, outputDirectory, resource);
+				gitSandboxDirectory, outputDirectory, resource, false);
 
 		Set<String> sourceFiles = FileService.findFiles(gitSandboxDirectory);
 		sourceFiles = IncludeService.process(includes, sourceFiles);
