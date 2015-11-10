@@ -28,6 +28,7 @@
    	<menu name="Documentation">
    	  <item name="Goals" href="goals.html" />
       <item name="Usage" href="usage.html" />
+      <item name="Project sample" href="exemple.html" />
     </menu>
    
    </body>

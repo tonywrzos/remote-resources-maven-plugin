@@ -31,6 +31,7 @@ public class FileService {
 	 *            The destination folder
 	 * @param resource
 	 *            Resource to process
+	 * @param isFlatten
 	 * @throws InvalidSourceException
 	 *             Exception throw if source is not valid
 	 * @throws IOException
@@ -38,11 +39,13 @@ public class FileService {
 	 */
 	static void copyFilesIntoOutputDirectory(
 			CopyResourcesMojo copyResourcesMojo, File sourceFolder,
-			File destinationFolder, Resource resource)
+			File destinationFolder, Resource resource, boolean isFlatten)
 			throws InvalidSourceException, IOException {
 		// check
 		if (sourceFolder.isFile()) {
-			throw new InvalidSourceException("Expected folder as source");
+			throw new InvalidSourceException(
+					"Expected folder as source, not a file : '" + sourceFolder
+							+ "'");
 		}
 		if (destinationFolder.isFile()) {
 			throw new InvalidSourceException("Expected destination as source");
@@ -62,7 +65,8 @@ public class FileService {
 						new FileInputStream(file));
 				// destination
 				StringBuilder finalFile = buildAbsoluteFinalFile(file,
-						sourceFolder.getAbsolutePath(), destinationFolder);
+						sourceFolder.getAbsolutePath(), destinationFolder,
+						isFlatten);
 
 				// prepare writer
 				FileUtils.createIntermediateFolders(String.valueOf(finalFile));
@@ -127,15 +131,23 @@ public class FileService {
 	 *            Absolute path to outputdirectory
 	 * @param destinationFolder
 	 *            Relative sub path from output directory
+	 * @param isFlatten
 	 * @return absolute path file in output directory
 	 */
 	private static StringBuilder buildAbsoluteFinalFile(String file,
-			String basePath, File destinationFolder) {
+			String basePath, File destinationFolder, boolean isFlatten) {
 		StringBuilder retval = new StringBuilder(
 				destinationFolder.getAbsolutePath());
 		PathUtils.addEndingSlashIfNeeded(retval);
-		String relativePath = file.replace(basePath, "");
-		retval.append(relativePath);
+		if (!isFlatten) {
+			// delete output directory from basePath
+			String relativePath = file.replace(basePath, "");
+			retval.append(relativePath);
+		} else {
+			// skip location file
+			String relativePath = new File(file).getName();
+			retval.append(relativePath);
+		}
 		return retval;
 	}
 
@@ -179,23 +191,6 @@ public class FileService {
 				retval.add(file.getAbsolutePath());
 			}
 		}
-		return retval;
-	}
-
-	/**
-	 * <p>
-	 * standardization of a path by replacing the slash and backslash by a file
-	 * separator
-	 * </p>
-	 * 
-	 * @param path
-	 *            the path to normalize
-	 * @return normalized string
-	 */
-	static String normalizePath(String path) {
-		String retval = path;
-		retval = retval.replace(PathUtils.MULTIPLE_SLASH, PathUtils.SLASH);
-		retval = retval.replace(PathUtils.BACKSLASH, PathUtils.SLASH);
 		return retval;
 	}
 

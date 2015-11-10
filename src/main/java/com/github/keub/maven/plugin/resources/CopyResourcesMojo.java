@@ -39,7 +39,7 @@ import com.github.keub.maven.plugin.service.ResourceService;
 /**
  * Copy resources for the main source code to the main output directory. Always
  * uses the project.build.resources element to specify the resources to copy.
- *
+ * 
  */
 @Mojo(name = "copy", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, threadSafe = true)
 public class CopyResourcesMojo extends AbstractMojo {
@@ -77,18 +77,18 @@ public class CopyResourcesMojo extends AbstractMojo {
 		// security
 		try {
 			CheckService.isValidOutputDirectory(outputDirectory);
-		}
-		catch (InvalidOutputDirectoryException e) {
+		} catch (InvalidOutputDirectoryException e) {
 			throw new MojoExecutionException("CheckService return error(s)", e);
 		}
 
 		getLog().debug("- resources : " + resources);
 		for (Resource resource : resources) {
+
 			try {
 				ResourceService.execute(this, resource, outputDirectory);
-			}
-			catch (ResourceExecutionException e) {
-				throw new MojoExecutionException("ResourceService return error(s)", e);
+			} catch (ResourceExecutionException e) {
+				throw new MojoExecutionException(
+						"ResourceService return error(s)", e);
 			}
 		}
 

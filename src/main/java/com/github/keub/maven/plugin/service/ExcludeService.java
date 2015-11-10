@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.keub.maven.plugin.utils.AntPathMatcher;
+import com.github.keub.maven.plugin.utils.FileUtils;
 
 public class ExcludeService {
 
@@ -28,7 +29,7 @@ public class ExcludeService {
 		for (String pattern : excludes) {
 			for (String path : files) {
 				boolean match = antPathMatcher.match(pattern,
-						FileService.normalizePath(path));
+						FileUtils.normalizePath(path));
 				if (!match) {
 					retval.add(path);
 				}

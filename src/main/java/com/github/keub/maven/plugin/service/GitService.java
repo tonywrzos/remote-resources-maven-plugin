@@ -1,7 +1,6 @@
 package com.github.keub.maven.plugin.service;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 import com.github.keub.maven.plugin.exception.GitException;
 import com.github.keub.maven.plugin.exception.ResourceExecutionException;
@@ -67,23 +66,27 @@ public class GitService {
 		String absolutePath = PathUtils.getAbsoluteProjectPath(project,
 				targetFolder);
 		File absoluteFolder = new File(absolutePath);
+		// recuperation d'une branche potentiellement renseignee
+		String branchTagName = project.getBranchTagName() == null ? Constants.MASTER_NAME
+				: project.getBranchTagName();
+
 		// test de presence du clone
 		if (absoluteFolder.exists()) {
 			// le depot a deja ete clone - on update
-			String branchTagName = project.getBranchTagName() == null ? Constants.MASTER_NAME
-					: project.getBranchTagName();
-			gitRepository.url(url).localPath(Paths.get(absolutePath))
+			gitRepository.url(url).localPath(absoluteFolder)
 					.credentials(gitCommiterName, gitCommiterPassword)
 					.disableCertificateValidation().selectBranch(branchTagName)
 					.fetch().hardReset(branchTagName);
 
 		} else {
 			// premier clone
-			gitRepository.url(url).localPath(Paths.get(targetFolder))
+			gitRepository.url(url).localPath(new File(targetFolder))
 					.credentials(gitCommiterName, gitCommiterPassword)
 					.disableCertificateValidation()
 					.disableHostnameVerification().cloneRepository()
-					.localPath(Paths.get(absolutePath));
+					.localPath(new File(absolutePath))
+					.selectBranch(branchTagName).fetch()
+					.hardReset(branchTagName);
 
 		}
 	}

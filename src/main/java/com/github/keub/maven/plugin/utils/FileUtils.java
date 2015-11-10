@@ -17,7 +17,8 @@ public class FileUtils {
 	 * @param writer
 	 * @throws IOException
 	 */
-	public static void writeFile(BufferedInputStream reader, BufferedOutputStream writer) throws IOException {
+	public static void writeFile(BufferedInputStream reader,
+			BufferedOutputStream writer) throws IOException {
 		byte[] buff = new byte[8192];
 		int numChars;
 		while ((numChars = reader.read(buff, 0, buff.length)) != -1) {
@@ -33,12 +34,36 @@ public class FileUtils {
 	 * @param absoluteFile
 	 * @throws FileNotFoundException
 	 */
-	public static void createIntermediateFolders(String absoluteFile) throws FileNotFoundException {
+	public static void createIntermediateFolders(String absoluteFile)
+			throws FileNotFoundException {
 		if (absoluteFile == null) {
-			throw new FileNotFoundException("'" + absoluteFile + "' is not valid");
+			throw new FileNotFoundException("'" + absoluteFile
+					+ "' is not valid");
 		}
-		String filePath = absoluteFile.substring(0, absoluteFile.lastIndexOf(File.separator));
+		// normalize the path
+		String normalizedAbsoluteFile = normalizePath(absoluteFile);
+		int endIndex = normalizedAbsoluteFile.endsWith(PathUtils.SLASH) ? normalizedAbsoluteFile
+				.length() : normalizedAbsoluteFile.lastIndexOf(PathUtils.SLASH);
+
+		String filePath = normalizedAbsoluteFile.substring(0, endIndex);
 		new File(filePath).mkdirs();
+	}
+
+	/**
+	 * <p>
+	 * standardization of a path by replacing the slash and backslash by a file
+	 * separator
+	 * </p>
+	 * 
+	 * @param path
+	 *            the path to normalize
+	 * @return normalized string
+	 */
+	public static String normalizePath(String path) {
+		String retval = path;
+		retval = retval.replace(PathUtils.MULTIPLE_SLASH, PathUtils.SLASH);
+		retval = retval.replace(PathUtils.BACKSLASH, PathUtils.SLASH);
+		return retval;
 	}
 
 }

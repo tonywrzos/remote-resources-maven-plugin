@@ -16,7 +16,7 @@
 
 	<groupId>com.github.keub</groupId>
 	<artifactId>remote-resources-maven-plugin</artifactId>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.6-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Remote Resources Maven Plugin</name>
@@ -209,12 +209,15 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<useReleaseProfile>false</useReleaseProfile>
-					<releaseProfiles>release</releaseProfiles>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-				</configuration>
+				<version>2.4.2</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-gitexe</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+
 			</plugin>
 		</plugins>
 	</build>
@@ -278,15 +281,18 @@
 		<connection>scm:git:https://keub@github.com/keub/remote-resources-maven-plugin.git</connection>
 		<developerConnection>scm:git:https://keub@github.com/keub/remote-resources-maven-plugin.git</developerConnection>
 		<url>http://github.com/keub/remote-resources-maven-plugin</url>
-		<tag>HEAD</tag>
+		<tag>1.0</tag>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
 	</distributionManagement>
-
 	<developers>
 		<developer>
 			<id>twrzos</id>

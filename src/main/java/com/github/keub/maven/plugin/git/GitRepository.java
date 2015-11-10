@@ -1,6 +1,6 @@
 package com.github.keub.maven.plugin.git;
 
-import java.nio.file.Path;
+import java.io.File;
 
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.FetchCommand;
@@ -24,7 +24,7 @@ public class GitRepository {
 	protected boolean withCredentials;
 	protected boolean certificateValidation = true;
 	protected boolean hostnameValidation = true;
-	protected Path localDirectoryPath;
+	protected File localDirectoryPath;
 
 	protected final void configureSSLValidation() {
 		// if the certificate is not valide then we have to disable it to
@@ -50,7 +50,8 @@ public class GitRepository {
 
 	protected final void configureCredentials(TransportCommand command) {
 		if (withCredentials) {
-			command.setCredentialsProvider(new UsernamePasswordCredentialsProvider(username, password));
+			command.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
+					username, password));
 		}
 	}
 
@@ -76,7 +77,7 @@ public class GitRepository {
 		return this;
 	}
 
-	public GitRepository localPath(Path localPath) {
+	public GitRepository localPath(File localPath) {
 		this.localDirectoryPath = localPath;
 		return this;
 	}
@@ -84,16 +85,17 @@ public class GitRepository {
 	public GitRepository cloneRepository() throws GitException {
 		Git result = null;
 		try {
-			Path localPath = localDirectoryPath.resolve(GitHelper.extractRepositoryNameFromUrl(url));
+			String repositoryName = GitHelper.extractRepositoryNameFromUrl(url);
+			File localPath = new File(localDirectoryPath.getAbsolutePath()
+					.concat(File.separator).concat(repositoryName));
 			configureSSLValidation();
 			CloneCommand cc = Git.cloneRepository();
 			configureCredentials(cc);
-			result = cc.setURI(url).setDirectory(localPath.toFile()).call();
-		}
-		catch (Exception ex) {
-			throw new GitException("Cannot clone remote repository " + url + " into " + localDirectoryPath, ex);
-		}
-		finally {
+			result = cc.setURI(url).setDirectory(localPath).call();
+		} catch (Exception ex) {
+			throw new GitException("Cannot clone remote repository " + url
+					+ " into " + localDirectoryPath, ex);
+		} finally {
 			close(result);
 		}
 		return this;
@@ -103,15 +105,14 @@ public class GitRepository {
 		Git git = null;
 		try {
 			configureSSLValidation();
-			git = Git.open(localDirectoryPath.toFile());
+			git = Git.open(localDirectoryPath);
 			FetchCommand fc = git.fetch();
 			configureCredentials(fc);
 			fc.call();
-		}
-		catch (Exception e) {
-			throw new GitException("Cannot open access local repository " + localDirectoryPath, e);
-		}
-		finally {
+		} catch (Exception e) {
+			throw new GitException("Cannot open access local repository "
+					+ localDirectoryPath, e);
+		} finally {
 			close(git);
 		}
 		return this;
@@ -121,13 +122,13 @@ public class GitRepository {
 		Git git = null;
 		try {
 			configureSSLValidation();
-			git = Git.open(localDirectoryPath.toFile());
-			git.reset().setMode(ResetCommand.ResetType.HARD).setRef(branchName).call();
-		}
-		catch (Exception e) {
-			throw new GitException("Cannot open access local repository " + localDirectoryPath, e);
-		}
-		finally {
+			git = Git.open(localDirectoryPath);
+			git.reset().setMode(ResetCommand.ResetType.HARD).setRef(branchName)
+					.call();
+		} catch (Exception e) {
+			throw new GitException("Cannot open access local repository "
+					+ localDirectoryPath, e);
+		} finally {
 			close(git);
 		}
 		return this;
@@ -136,13 +137,12 @@ public class GitRepository {
 	public String currentBranch() throws GitException {
 		Git git = null;
 		try {
-			git = Git.open(localDirectoryPath.toFile());
+			git = Git.open(localDirectoryPath);
 			return git.getRepository().getFullBranch();
-		}
-		catch (Exception e) {
-			throw new GitException("Cannot open access local repository " + localDirectoryPath, e);
-		}
-		finally {
+		} catch (Exception e) {
+			throw new GitException("Cannot open access local repository "
+					+ localDirectoryPath, e);
+		} finally {
 			close(git);
 		}
 	}
@@ -150,13 +150,12 @@ public class GitRepository {
 	public GitRepository selectBranch(String name) throws GitException {
 		Git git = null;
 		try {
-			git = Git.open(localDirectoryPath.toFile());
+			git = Git.open(localDirectoryPath);
 			git.checkout().setName(name).call();
-		}
-		catch (Exception e) {
-			throw new GitException("Cannot open access local repository " + localDirectoryPath, e);
-		}
-		finally {
+		} catch (Exception e) {
+			throw new GitException("Cannot open access local repository "
+					+ localDirectoryPath, e);
+		} finally {
 			close(git);
 		}
 

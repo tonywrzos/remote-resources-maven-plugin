@@ -2,6 +2,25 @@ Usage
 
  The following examples describe the basic usage of the Plugin.
 
+* Declare plugin
+
+  Declare remote-resources-maven-plugin in build section :
+  
++---------------------
+<build>
+  <plugins>
+    <plugin>
+      <groupId>com.github.keub</groupId>
+      <artifactId>remote-resources-maven-plugin</artifactId>
+      <version>1.1</version>
+      ...
+    </plugin>
+  </plugins>
+</build>
++---------------------
+
+  and add some configurations ( git, ftp .. ) 
+
 * Copy resources from GIT project 
   
   If you want to copy resources that are in a project git accessible from where your project is built , specify the configuration as follows :  
@@ -40,11 +59,13 @@ Usage
 +---------------------
 <configuration>   
   <resources>
-      ...
-    <includes>
-      <include>**/foo.txt</include>
-    </includes>              
-    </resources>    
+    <resource>
+       ...
+      <includes>
+        <include>**/foo.txt</include>
+      </includes>
+      </resource> 
+    </resources>
 </configuration>
 +---------------------
   The result is a set of files where only the files that are called ' foo.txt ' in any directories are present in the output directory.
@@ -55,10 +76,12 @@ Usage
 <configuration>   
   <resources>
       ...
-    <excludes>
-      <exclude>**/foo.txt</exclude>
-    </excludes>              
-    </resources>    
+      <resource>
+        <excludes>
+          <exclude>**/foo.txt</exclude>
+        </excludes>  
+      </resource>             
+    </resources>   
 </configuration>
 +---------------------
   The result is a file where all the files that are called ' foo.txt ' in any directories are missing from the output directory.
@@ -71,7 +94,7 @@ Usage
 <plugin>
   <groupId>com.github.keub</groupId>
     <artifactId>remote-resources-maven-plugin</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <executions>
       <execution>
         <id>execution1</id>
