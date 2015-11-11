@@ -1,3 +1,14 @@
 Exemple
 
-  Sample project is avaible here : https://github.com/keub/remote-resources-maven-plugin/blob/wip/src/test/resources/maven_project_sample/pom.xml 
+  * Sample project 
+  
+  Sample project is avaible here : 
+  {{{https://github.com/keub/remote-resources-maven-plugin/blob/wip/src/test/resources/maven_project_sample/pom.xml}link}}.
+  
+  * Command example available for this sample :
+
++---------------------
+mvn process-resources -Penv1
++---------------------
+
+   
