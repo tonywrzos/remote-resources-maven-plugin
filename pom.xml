@@ -16,7 +16,7 @@
 
 	<groupId>com.github.keub</groupId>
 	<artifactId>remote-resources-maven-plugin</artifactId>
-	<version>1.9</version>
+	<version>1.10-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Remote Resources Maven Plugin</name>
@@ -281,7 +281,7 @@
 		<connection>scm:git:https://keub@github.com/keub/remote-resources-maven-plugin.git</connection>
 		<developerConnection>scm:git:https://keub@github.com/keub/remote-resources-maven-plugin.git</developerConnection>
 		<url>http://github.com/keub/remote-resources-maven-plugin</url>
-		<tag>1.9</tag>
+		<tag>1.6</tag>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
