@@ -109,11 +109,13 @@ public class FileService {
 			Set<String> files) {
 		Set<String> retval = new HashSet<String>(files);
 		// process with include parameters
-		retval = IncludeService.process(resource.getIncludes(), files);
+		retval = IncludeService.process(copyResourcesMojo,
+				resource.getIncludes(), files);
 		copyResourcesMojo.getLog().debug(
 				"files after include processing :" + files);
 		// process with exclude parameters
-		retval = ExcludeService.process(resource.getExcludes(), retval);
+		retval = ExcludeService.process(copyResourcesMojo,
+				resource.getExcludes(), retval);
 		copyResourcesMojo.getLog().debug(
 				"files after exclude processing :" + files);
 		return retval;

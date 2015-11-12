@@ -61,8 +61,8 @@ public class FileUtils {
 	 */
 	public static String normalizePath(String path) {
 		String retval = path;
-		retval = retval.replace(PathUtils.MULTIPLE_SLASH, PathUtils.SLASH);
-		retval = retval.replace(PathUtils.BACKSLASH, PathUtils.SLASH);
+		retval = retval.replaceAll(PathUtils.MULTIPLE_SLASH, PathUtils.SLASH);
+		retval = retval.replaceAll(PathUtils.BACKSLASH, PathUtils.SLASH);
 		return retval;
 	}
 
