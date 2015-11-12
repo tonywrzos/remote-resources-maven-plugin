@@ -6,6 +6,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.keub.maven.plugin.resources.CopyResourcesMojo;
+
 public class ExcludeServiceTest {
 
 	@Test
@@ -15,7 +17,8 @@ public class ExcludeServiceTest {
 		String file = "foo.txt";
 		files.add(file);
 
-		Set<String> retval = ExcludeService.process(excludes, files);
+		Set<String> retval = ExcludeService.process(new CopyResourcesMojo(),
+				excludes, files);
 		Assert.assertNotNull(retval);
 		Assert.assertEquals(files.size(), retval.size());
 		Assert.assertTrue(retval.contains(file));
@@ -26,7 +29,8 @@ public class ExcludeServiceTest {
 		Set<String> excludes = null;
 		Set<String> files = new HashSet<String>();
 
-		Set<String> retval = ExcludeService.process(excludes, files);
+		Set<String> retval = ExcludeService.process(new CopyResourcesMojo(),
+				excludes, files);
 		Assert.assertNotNull(retval);
 		Assert.assertEquals(files.size(), retval.size());
 	}
@@ -37,7 +41,8 @@ public class ExcludeServiceTest {
 		excludes.add("**/foo.txt");
 		Set<String> files = new HashSet<String>();
 
-		Set<String> retval = ExcludeService.process(excludes, files);
+		Set<String> retval = ExcludeService.process(new CopyResourcesMojo(),
+				excludes, files);
 		Assert.assertNotNull(retval);
 		Assert.assertEquals(files.size(), retval.size());
 	}
@@ -54,7 +59,8 @@ public class ExcludeServiceTest {
 		String file3 = "bar.txt";
 		files.add(file3);
 
-		Set<String> retval = ExcludeService.process(excludes, files);
+		Set<String> retval = ExcludeService.process(new CopyResourcesMojo(),
+				excludes, files);
 		Assert.assertNotNull(retval);
 		Assert.assertEquals(1, retval.size());
 		Assert.assertTrue(retval.contains(file3));

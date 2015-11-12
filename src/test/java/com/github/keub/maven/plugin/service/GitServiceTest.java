@@ -100,7 +100,8 @@ public class GitServiceTest {
 				gitSandboxDirectory, outputDirectory, resource, false);
 
 		Set<String> sourceFiles = FileService.findFiles(gitSandboxDirectory);
-		sourceFiles = IncludeService.process(includes, sourceFiles);
+		sourceFiles = IncludeService.process(new CopyResourcesMojo(), includes,
+				sourceFiles);
 		Set<String> destinationFiles = FileService.findFiles(outputDirectory);
 
 		Assert.assertEquals(2, destinationFiles.size());

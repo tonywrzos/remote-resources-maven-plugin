@@ -7,13 +7,12 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.keub.maven.plugin.service.ExcludeService;
-import com.github.keub.maven.plugin.service.FileService;
-import com.github.keub.maven.plugin.service.IncludeService;
+import com.github.keub.maven.plugin.resources.CopyResourcesMojo;
 
 public class FileServiceTest {
 
-	private final static File sandboxResourcesDirectory = new File("src/test/resources/sandbox");
+	private final static File sandboxResourcesDirectory = new File(
+			"src/test/resources/sandbox");
 	private final static Set<String> sandboxFiles = new HashSet<String>();
 	private final static Set<String> includes = new HashSet<String>();
 	private final static Set<String> excludes = new HashSet<String>();
@@ -40,7 +39,8 @@ public class FileServiceTest {
 			for (String sandboxFile : sandboxFiles) {
 				File actualFile = new File(file);
 				File expectedFile = new File(sandboxFile);
-				if (actualFile.getAbsolutePath().equals(expectedFile.getAbsolutePath())) {
+				if (actualFile.getAbsolutePath().equals(
+						expectedFile.getAbsolutePath())) {
 					match = true;
 					break;
 				}
@@ -53,7 +53,8 @@ public class FileServiceTest {
 	@Test
 	public void should_returns_only_included_files() {
 		Set<String> retval = FileService.findFiles(sandboxResourcesDirectory);
-		retval = IncludeService.process(includes, retval);
+		retval = IncludeService.process(new CopyResourcesMojo(), includes,
+				retval);
 
 		Assert.assertNotNull(retval);
 		Assert.assertEquals(2, retval.size());
@@ -63,7 +64,8 @@ public class FileServiceTest {
 			for (String sandboxFile : sandboxFiles) {
 				File actualFile = new File(file);
 				File expectedFile = new File(sandboxFile);
-				if (actualFile.getAbsolutePath().equals(expectedFile.getAbsolutePath())) {
+				if (actualFile.getAbsolutePath().equals(
+						expectedFile.getAbsolutePath())) {
 					match = true;
 					break;
 				}
@@ -76,7 +78,8 @@ public class FileServiceTest {
 	@Test
 	public void should_returns_only_excluded_files() {
 		Set<String> retval = FileService.findFiles(sandboxResourcesDirectory);
-		retval = ExcludeService.process(excludes, retval);
+		retval = ExcludeService.process(new CopyResourcesMojo(), excludes,
+				retval);
 
 		Assert.assertNotNull(retval);
 		Assert.assertEquals(1, retval.size());
@@ -86,7 +89,8 @@ public class FileServiceTest {
 			for (String sandboxFile : sandboxFiles) {
 				File actualFile = new File(file);
 				File expectedFile = new File(sandboxFile);
-				if (actualFile.getAbsolutePath().equals(expectedFile.getAbsolutePath())) {
+				if (actualFile.getAbsolutePath().equals(
+						expectedFile.getAbsolutePath())) {
 					match = true;
 					break;
 				}
