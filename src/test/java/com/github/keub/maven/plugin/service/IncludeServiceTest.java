@@ -66,4 +66,38 @@ public class IncludeServiceTest {
 		Assert.assertTrue(retval.contains(file1));
 		Assert.assertTrue(retval.contains(file2));
 	}
+
+	@Test
+	public void process_with_invalid_includes_and_unix_path() {
+		Set<String> includes = new HashSet<String>();
+		includes.add("**/foo.txt");
+		Set<String> files = new HashSet<String>();
+		String file1 = "/root/foo.txt";
+		files.add(file1);
+
+		Set<String> retval = IncludeService.process(new CopyResourcesMojo(),
+				includes, files);
+
+		Assert.assertNotNull(retval);
+		Assert.assertEquals(0, retval.size());
+
+	}
+
+	@Test
+	public void process_with_valid_includes_and_unix_path() {
+		Set<String> includes = new HashSet<String>();
+		includes.add("/**/foo.txt");
+		Set<String> files = new HashSet<String>();
+		String file1 = "/root/foo.txt";
+		files.add(file1);
+
+		Set<String> retval = IncludeService.process(new CopyResourcesMojo(),
+				includes, files);
+
+		Assert.assertNotNull(retval);
+		Assert.assertEquals(1, retval.size());
+		Assert.assertTrue(retval.contains(file1));
+
+	}
+
 }
